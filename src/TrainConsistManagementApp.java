@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class TrainConsistManagementApp {
 
@@ -48,6 +50,24 @@ public class TrainConsistManagementApp {
         // Final state
         System.out.println("\nFinal train consist:");
         System.out.println(trainConsist);
+
+
+        // =====================================
+        // UC3: Ensure Unique Bogie IDs using HashSet
+        // =====================================
+
+        Set<String> bogieIds = new HashSet<>();
+
+        // Adding bogie IDs (with duplicates)
+        bogieIds.add("B1");
+        bogieIds.add("B2");
+        bogieIds.add("B3");
+        bogieIds.add("B2"); // duplicate
+        bogieIds.add("B1"); // duplicate
+
+        // Display unique bogie IDs
+        System.out.println("\nUnique Bogie IDs (duplicates ignored):");
+        System.out.println(bogieIds);
 
         // Program continues...
     }
