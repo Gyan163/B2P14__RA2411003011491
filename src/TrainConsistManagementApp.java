@@ -1,5 +1,20 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class TrainConsistManagementApp {
+
     public static void main(String[] args) {
-        System.out.println("Train Consist Management App Started");
+
+        // Welcome Message
+        System.out.println("=== Train Consist Management App ===");
+
+        // Initialize Train Consist (Empty List of Bogies)
+        List<String> trainConsist = new ArrayList<>();
+
+        // Display Initial Bogie Count
+        System.out.println("Train initialized successfully.");
+        System.out.println("Initial number of bogies: " + trainConsist.size());
+
+        // Program continues...
     }
 }
