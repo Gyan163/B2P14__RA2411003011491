@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.LinkedList;
 
 public class TrainConsistManagementApp {
 
@@ -13,7 +14,6 @@ public class TrainConsistManagementApp {
 
         System.out.println("=== Train Consist Management App ===");
 
-        // Initialize empty train consist
         List<String> trainConsist = new ArrayList<>();
 
         System.out.println("Train initialized successfully.");
@@ -24,50 +24,76 @@ public class TrainConsistManagementApp {
         // UC2: Add & Manage Passenger Bogies
         // =====================================
 
-        // Add bogies
         trainConsist.add("Sleeper");
         trainConsist.add("AC Chair");
         trainConsist.add("First Class");
 
-        // Display after adding
         System.out.println("\nAfter adding bogies:");
         System.out.println(trainConsist);
 
-        // Remove a bogie
         trainConsist.remove("AC Chair");
 
-        // Display after removal
         System.out.println("\nAfter removing AC Chair:");
         System.out.println(trainConsist);
 
-        // Check if Sleeper exists
         if (trainConsist.contains("Sleeper")) {
             System.out.println("\nSleeper bogie is present in the train.");
         } else {
             System.out.println("\nSleeper bogie is NOT present.");
         }
 
-        // Final state
         System.out.println("\nFinal train consist:");
         System.out.println(trainConsist);
 
 
         // =====================================
-        // UC3: Ensure Unique Bogie IDs using HashSet
+        // UC3: Ensure Unique Bogie IDs
         // =====================================
 
         Set<String> bogieIds = new HashSet<>();
 
-        // Adding bogie IDs (with duplicates)
         bogieIds.add("B1");
         bogieIds.add("B2");
         bogieIds.add("B3");
         bogieIds.add("B2"); // duplicate
         bogieIds.add("B1"); // duplicate
 
-        // Display unique bogie IDs
         System.out.println("\nUnique Bogie IDs (duplicates ignored):");
         System.out.println(bogieIds);
+
+
+        // =====================================
+        // UC4: LinkedList Train Operations
+        // =====================================
+
+        LinkedList<String> linkedTrain = new LinkedList<>();
+
+        // Add bogies
+        linkedTrain.add("Engine");
+        linkedTrain.add("Sleeper");
+        linkedTrain.add("AC");
+        linkedTrain.add("Cargo");
+        linkedTrain.add("Guard");
+
+        System.out.println("\nInitial Linked Train:");
+        System.out.println(linkedTrain);
+
+        // Insert Pantry Car at position 2
+        linkedTrain.add(2, "Pantry Car");
+
+        System.out.println("\nAfter adding Pantry Car at position 2:");
+        System.out.println(linkedTrain);
+
+        // Remove first and last bogie
+        linkedTrain.removeFirst();
+        linkedTrain.removeLast();
+
+        System.out.println("\nAfter removing first and last bogie:");
+        System.out.println(linkedTrain);
+
+        // Final state
+        System.out.println("\nFinal Linked Train Consist:");
+        System.out.println(linkedTrain);
 
         // Program continues...
     }
