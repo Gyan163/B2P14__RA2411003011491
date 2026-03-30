@@ -7,11 +7,12 @@ import java.util.LinkedHashSet;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Comparator;
+import java.util.stream.Collectors;
 
 public class TrainConsistManagementApp {
 
     // =====================================
-    // UC7: Bogie Class (Custom Object)
+    // UC7: Bogie Class
     // =====================================
     static class Bogie {
         String name;
@@ -31,9 +32,8 @@ public class TrainConsistManagementApp {
     public static void main(String[] args) {
 
         // =====================================
-        // UC1: Initialize Train Consist
+        // UC1
         // =====================================
-
         System.out.println("=== Train Consist Management App ===");
 
         List<String> trainConsist = new ArrayList<>();
@@ -43,9 +43,8 @@ public class TrainConsistManagementApp {
 
 
         // =====================================
-        // UC2: Add & Manage Passenger Bogies
+        // UC2
         // =====================================
-
         trainConsist.add("Sleeper");
         trainConsist.add("AC Chair");
         trainConsist.add("First Class");
@@ -59,7 +58,7 @@ public class TrainConsistManagementApp {
         System.out.println(trainConsist);
 
         if (trainConsist.contains("Sleeper")) {
-            System.out.println("\nSleeper bogie is present in the train.");
+            System.out.println("\nSleeper bogie is present.");
         }
 
         System.out.println("\nFinal train consist:");
@@ -67,9 +66,8 @@ public class TrainConsistManagementApp {
 
 
         // =====================================
-        // UC3: HashSet (Unique Bogie IDs)
+        // UC3
         // =====================================
-
         Set<String> bogieIds = new HashSet<>();
 
         bogieIds.add("B1");
@@ -82,9 +80,8 @@ public class TrainConsistManagementApp {
 
 
         // =====================================
-        // UC4: LinkedList Operations
+        // UC4
         // =====================================
-
         LinkedList<String> linkedTrain = new LinkedList<>();
 
         linkedTrain.add("Engine");
@@ -103,9 +100,8 @@ public class TrainConsistManagementApp {
 
 
         // =====================================
-        // UC5: LinkedHashSet (Order + Unique)
+        // UC5
         // =====================================
-
         LinkedHashSet<String> formation = new LinkedHashSet<>();
 
         formation.add("Engine");
@@ -119,9 +115,8 @@ public class TrainConsistManagementApp {
 
 
         // =====================================
-        // UC6: HashMap (Bogie → Capacity)
+        // UC6
         // =====================================
-
         Map<String, Integer> bogieCapacity = new HashMap<>();
 
         bogieCapacity.put("Sleeper", 72);
@@ -136,12 +131,10 @@ public class TrainConsistManagementApp {
 
 
         // =====================================
-        // UC7: Sorting Bogies using Comparator
+        // UC7
         // =====================================
-
         List<Bogie> bogieList = new ArrayList<>();
 
-        // Add bogie objects
         bogieList.add(new Bogie("Sleeper", 72));
         bogieList.add(new Bogie("AC Chair", 60));
         bogieList.add(new Bogie("First Class", 40));
@@ -149,11 +142,24 @@ public class TrainConsistManagementApp {
         System.out.println("\nBefore Sorting:");
         System.out.println(bogieList);
 
-        // Sort using Comparator (Lambda)
         bogieList.sort(Comparator.comparingInt(b -> b.capacity));
 
-        System.out.println("\nAfter Sorting (by Capacity):");
+        System.out.println("\nAfter Sorting:");
         System.out.println(bogieList);
+
+
+        // =====================================
+        // UC8: Stream Filtering
+        // =====================================
+
+        // Create stream + filter + collect
+        List<Bogie> filteredBogies = bogieList.stream()
+                .filter(b -> b.capacity > 60)
+                .collect(Collectors.toList());
+
+        // Display filtered bogies
+        System.out.println("\nFiltered Bogies (Capacity > 60):");
+        System.out.println(filteredBogies);
 
         // Program continues...
     }
