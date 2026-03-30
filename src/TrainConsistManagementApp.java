@@ -152,10 +152,8 @@ public class TrainConsistManagementApp {
         System.out.println(filteredBogies);
 
         // =====================================
-        // UC9: Grouping Bogies
+        // UC9
         // =====================================
-
-        // Group by category (example: High / Medium / Low capacity)
         Map<String, List<Bogie>> groupedBogies = bogieList.stream()
                 .collect(Collectors.groupingBy(b -> {
                     if (b.capacity > 60) return "High Capacity";
@@ -163,12 +161,22 @@ public class TrainConsistManagementApp {
                     else return "Low Capacity";
                 }));
 
-        // Display grouped result
         System.out.println("\nGrouped Bogies:");
 
         for (Map.Entry<String, List<Bogie>> entry : groupedBogies.entrySet()) {
             System.out.println(entry.getKey() + " -> " + entry.getValue());
         }
+
+        // =====================================
+        // UC10: Aggregate Capacity using reduce()
+        // =====================================
+
+        int totalCapacity = bogieList.stream()
+                .map(b -> b.capacity)      // extract capacities
+                .reduce(0, Integer::sum);  // sum them
+
+        System.out.println("\nTotal Seating Capacity:");
+        System.out.println(totalCapacity);
 
         // Program continues...
     }
