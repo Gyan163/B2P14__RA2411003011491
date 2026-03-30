@@ -31,6 +31,24 @@ public class TrainConsistManagementApp {
         }
     }
 
+    // =====================================
+    // UC12: Goods Bogie Class
+    // =====================================
+    static class GoodsBogie {
+        String type;
+        String cargo;
+
+        GoodsBogie(String type, String cargo) {
+            this.type = type;
+            this.cargo = cargo;
+        }
+
+        @Override
+        public String toString() {
+            return type + " -> " + cargo;
+        }
+    }
+
     public static void main(String[] args) {
 
         // =====================================
@@ -39,7 +57,6 @@ public class TrainConsistManagementApp {
         System.out.println("=== Train Consist Management App ===");
 
         List<String> trainConsist = new ArrayList<>();
-
         System.out.println("Train initialized successfully.");
         System.out.println("Initial number of bogies: " + trainConsist.size());
 
@@ -69,7 +86,6 @@ public class TrainConsistManagementApp {
         // UC3
         // =====================================
         Set<String> bogieIds = new HashSet<>();
-
         bogieIds.add("B1");
         bogieIds.add("B2");
         bogieIds.add("B3");
@@ -82,7 +98,6 @@ public class TrainConsistManagementApp {
         // UC4
         // =====================================
         LinkedList<String> linkedTrain = new LinkedList<>();
-
         linkedTrain.add("Engine");
         linkedTrain.add("Sleeper");
         linkedTrain.add("AC");
@@ -90,7 +105,6 @@ public class TrainConsistManagementApp {
         linkedTrain.add("Guard");
 
         linkedTrain.add(2, "Pantry Car");
-
         linkedTrain.removeFirst();
         linkedTrain.removeLast();
 
@@ -101,7 +115,6 @@ public class TrainConsistManagementApp {
         // UC5
         // =====================================
         LinkedHashSet<String> formation = new LinkedHashSet<>();
-
         formation.add("Engine");
         formation.add("Sleeper");
         formation.add("Cargo");
@@ -115,13 +128,11 @@ public class TrainConsistManagementApp {
         // UC6
         // =====================================
         Map<String, Integer> bogieCapacity = new HashMap<>();
-
         bogieCapacity.put("Sleeper", 72);
         bogieCapacity.put("AC Chair", 60);
         bogieCapacity.put("First Class", 40);
 
         System.out.println("\nBogie Capacity:");
-
         for (Map.Entry<String, Integer> entry : bogieCapacity.entrySet()) {
             System.out.println(entry.getKey() + " -> " + entry.getValue());
         }
@@ -130,7 +141,6 @@ public class TrainConsistManagementApp {
         // UC7
         // =====================================
         List<Bogie> bogieList = new ArrayList<>();
-
         bogieList.add(new Bogie("Sleeper", 72));
         bogieList.add(new Bogie("AC Chair", 60));
         bogieList.add(new Bogie("First Class", 40));
@@ -164,7 +174,6 @@ public class TrainConsistManagementApp {
                 }));
 
         System.out.println("\nGrouped Bogies:");
-
         for (Map.Entry<String, List<Bogie>> entry : groupedBogies.entrySet()) {
             System.out.println(entry.getKey() + " -> " + entry.getValue());
         }
@@ -180,32 +189,43 @@ public class TrainConsistManagementApp {
         System.out.println(totalCapacity);
 
         // =====================================
-        // UC11: Regex Validation
+        // UC11
         // =====================================
+        String trainId = "TRN-1234";
+        String cargoCode = "PET-AB";
 
-        String trainId = "TRN-1234";   // sample input
-        String cargoCode = "PET-AB";   // sample input
-
-        // Define regex patterns
         Pattern trainPattern = Pattern.compile("TRN-\\d{4}");
         Pattern cargoPattern = Pattern.compile("PET-[A-Z]{2}");
 
-        // Create matchers
         Matcher trainMatcher = trainPattern.matcher(trainId);
         Matcher cargoMatcher = cargoPattern.matcher(cargoCode);
 
-        // Validate Train ID
-        if (trainMatcher.matches()) {
-            System.out.println("\nTrain ID is valid: " + trainId);
-        } else {
-            System.out.println("\nInvalid Train ID: " + trainId);
-        }
+        System.out.println("\nTrain ID Valid: " + trainMatcher.matches());
+        System.out.println("Cargo Code Valid: " + cargoMatcher.matches());
 
-        // Validate Cargo Code
-        if (cargoMatcher.matches()) {
-            System.out.println("Cargo Code is valid: " + cargoCode);
+        // =====================================
+        // UC12: Functional Rule Validation
+        // =====================================
+
+        List<GoodsBogie> goodsList = new ArrayList<>();
+
+        goodsList.add(new GoodsBogie("Cylindrical", "Petroleum"));
+        goodsList.add(new GoodsBogie("Box", "Grains"));
+        goodsList.add(new GoodsBogie("Cylindrical", "Petroleum"));
+
+        // Apply safety rule using allMatch()
+        boolean isSafe = goodsList.stream()
+                .allMatch(b ->
+                        !(b.type.equals("Cylindrical") && !b.cargo.equals("Petroleum"))
+                );
+
+        System.out.println("\nGoods Bogies:");
+        System.out.println(goodsList);
+
+        if (isSafe) {
+            System.out.println("Train is SAFE for transportation.");
         } else {
-            System.out.println("Invalid Cargo Code: " + cargoCode);
+            System.out.println("Train is NOT SAFE!");
         }
 
         // Program continues...
