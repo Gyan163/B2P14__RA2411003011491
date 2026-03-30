@@ -41,7 +41,6 @@ public class TrainConsistManagementApp {
         System.out.println("Train initialized successfully.");
         System.out.println("Initial number of bogies: " + trainConsist.size());
 
-
         // =====================================
         // UC2
         // =====================================
@@ -64,7 +63,6 @@ public class TrainConsistManagementApp {
         System.out.println("\nFinal train consist:");
         System.out.println(trainConsist);
 
-
         // =====================================
         // UC3
         // =====================================
@@ -77,7 +75,6 @@ public class TrainConsistManagementApp {
 
         System.out.println("\nUnique Bogie IDs:");
         System.out.println(bogieIds);
-
 
         // =====================================
         // UC4
@@ -98,7 +95,6 @@ public class TrainConsistManagementApp {
         System.out.println("\nFinal Linked Train:");
         System.out.println(linkedTrain);
 
-
         // =====================================
         // UC5
         // =====================================
@@ -112,7 +108,6 @@ public class TrainConsistManagementApp {
 
         System.out.println("\nOrdered Unique Formation:");
         System.out.println(formation);
-
 
         // =====================================
         // UC6
@@ -128,7 +123,6 @@ public class TrainConsistManagementApp {
         for (Map.Entry<String, Integer> entry : bogieCapacity.entrySet()) {
             System.out.println(entry.getKey() + " -> " + entry.getValue());
         }
-
 
         // =====================================
         // UC7
@@ -147,19 +141,34 @@ public class TrainConsistManagementApp {
         System.out.println("\nAfter Sorting:");
         System.out.println(bogieList);
 
-
         // =====================================
-        // UC8: Stream Filtering
+        // UC8
         // =====================================
-
-        // Create stream + filter + collect
         List<Bogie> filteredBogies = bogieList.stream()
                 .filter(b -> b.capacity > 60)
                 .collect(Collectors.toList());
 
-        // Display filtered bogies
         System.out.println("\nFiltered Bogies (Capacity > 60):");
         System.out.println(filteredBogies);
+
+        // =====================================
+        // UC9: Grouping Bogies
+        // =====================================
+
+        // Group by category (example: High / Medium / Low capacity)
+        Map<String, List<Bogie>> groupedBogies = bogieList.stream()
+                .collect(Collectors.groupingBy(b -> {
+                    if (b.capacity > 60) return "High Capacity";
+                    else if (b.capacity >= 50) return "Medium Capacity";
+                    else return "Low Capacity";
+                }));
+
+        // Display grouped result
+        System.out.println("\nGrouped Bogies:");
+
+        for (Map.Entry<String, List<Bogie>> entry : groupedBogies.entrySet()) {
+            System.out.println(entry.getKey() + " -> " + entry.getValue());
+        }
 
         // Program continues...
     }
