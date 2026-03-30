@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Comparator;
 import java.util.stream.Collectors;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class TrainConsistManagementApp {
 
@@ -168,15 +170,43 @@ public class TrainConsistManagementApp {
         }
 
         // =====================================
-        // UC10: Aggregate Capacity using reduce()
+        // UC10
         // =====================================
-
         int totalCapacity = bogieList.stream()
-                .map(b -> b.capacity)      // extract capacities
-                .reduce(0, Integer::sum);  // sum them
+                .map(b -> b.capacity)
+                .reduce(0, Integer::sum);
 
         System.out.println("\nTotal Seating Capacity:");
         System.out.println(totalCapacity);
+
+        // =====================================
+        // UC11: Regex Validation
+        // =====================================
+
+        String trainId = "TRN-1234";   // sample input
+        String cargoCode = "PET-AB";   // sample input
+
+        // Define regex patterns
+        Pattern trainPattern = Pattern.compile("TRN-\\d{4}");
+        Pattern cargoPattern = Pattern.compile("PET-[A-Z]{2}");
+
+        // Create matchers
+        Matcher trainMatcher = trainPattern.matcher(trainId);
+        Matcher cargoMatcher = cargoPattern.matcher(cargoCode);
+
+        // Validate Train ID
+        if (trainMatcher.matches()) {
+            System.out.println("\nTrain ID is valid: " + trainId);
+        } else {
+            System.out.println("\nInvalid Train ID: " + trainId);
+        }
+
+        // Validate Cargo Code
+        if (cargoMatcher.matches()) {
+            System.out.println("Cargo Code is valid: " + cargoCode);
+        } else {
+            System.out.println("Invalid Cargo Code: " + cargoCode);
+        }
 
         // Program continues...
     }
