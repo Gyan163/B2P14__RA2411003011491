@@ -4,21 +4,18 @@ import java.util.regex.*;
 
 public class TrainConsistManagementApp {
 
-    // UC14
     static class InvalidCapacityException extends Exception {
         InvalidCapacityException(String msg) {
             super(msg);
         }
     }
 
-    // UC15
     static class CargoSafetyException extends RuntimeException {
         CargoSafetyException(String msg) {
             super(msg);
         }
     }
 
-    // UC7 + UC14
     static class Bogie {
         String name;
         int capacity;
@@ -36,7 +33,6 @@ public class TrainConsistManagementApp {
         }
     }
 
-    // UC12
     static class GoodsBogie {
         String type;
         String cargo;
@@ -115,7 +111,7 @@ public class TrainConsistManagementApp {
             bogies.add(new Bogie("Sleeper", 72));
             bogies.add(new Bogie("AC Chair", 60));
             bogies.add(new Bogie("First Class", 40));
-            bogies.add(new Bogie("Invalid", -5)); // exception
+            bogies.add(new Bogie("Invalid", -5));
         } catch (InvalidCapacityException e) {
             System.out.println("\nException: " + e.getMessage());
         }
@@ -173,16 +169,13 @@ public class TrainConsistManagementApp {
         } catch (InvalidCapacityException e) {}
 
         long startLoop = System.nanoTime();
-        List<Bogie> loopRes = new ArrayList<>();
         for (Bogie b : test) {
-            if (b.capacity > 60) loopRes.add(b);
+            if (b.capacity > 60) {}
         }
         long loopTime = System.nanoTime() - startLoop;
 
         long startStream = System.nanoTime();
-        List<Bogie> streamRes = test.stream()
-                .filter(b -> b.capacity > 60)
-                .collect(Collectors.toList());
+        test.stream().filter(b -> b.capacity > 60).collect(Collectors.toList());
         long streamTime = System.nanoTime() - startStream;
 
         System.out.println("\nLoop Time: " + loopTime);
@@ -199,21 +192,14 @@ public class TrainConsistManagementApp {
                 throw new CargoSafetyException("Unsafe cargo assignment!");
             }
 
-            System.out.println("Cargo assigned successfully.");
-
         } catch (CargoSafetyException e) {
             System.out.println("ERROR: " + e.getMessage());
-
         } finally {
             System.out.println("Cargo process completed.");
         }
 
-        // UC16 (Bubble Sort)
+        // UC16
         int[] capacities = {72, 60, 40, 90, 55};
-
-        System.out.println("\nBefore Sorting (Bubble Sort):");
-        System.out.println(Arrays.toString(capacities));
-
         for (int i = 0; i < capacities.length - 1; i++) {
             for (int j = 0; j < capacities.length - i - 1; j++) {
                 if (capacities[j] > capacities[j + 1]) {
@@ -223,39 +209,52 @@ public class TrainConsistManagementApp {
                 }
             }
         }
+        System.out.println("\nBubble Sorted: " + Arrays.toString(capacities));
 
-        System.out.println("After Sorting (Bubble Sort):");
-        System.out.println(Arrays.toString(capacities));
+        // UC17
+        String[] types = {"Sleeper", "AC Chair", "First Class", "Cargo", "Engine"};
+        Arrays.sort(types);
+        System.out.println("Arrays.sort: " + Arrays.toString(types));
 
-        // UC17 (Arrays.sort)
-        String[] bogieTypes = {"Sleeper", "AC Chair", "First Class", "Cargo", "Engine"};
-
-        System.out.println("\nBefore Sorting (Arrays.sort):");
-        System.out.println(Arrays.toString(bogieTypes));
-
-        Arrays.sort(bogieTypes);
-
-        System.out.println("After Sorting (Arrays.sort):");
-        System.out.println(Arrays.toString(bogieTypes));
-
-        // UC18 (Linear Search)
+        // UC18
         String[] bogieIdsArr = {"B3", "B1", "B7", "B2", "B9"};
-        String searchKey = "B7";
-
-        System.out.println("\nSearching for Bogie ID: " + searchKey);
-
+        String key = "B7";
         boolean found = false;
 
         for (int i = 0; i < bogieIdsArr.length; i++) {
-            if (bogieIdsArr[i].equals(searchKey)) {
+            if (bogieIdsArr[i].equals(key)) {
                 found = true;
-                System.out.println("Bogie found at position: " + i);
                 break;
             }
         }
+        System.out.println("\nLinear Search Found: " + found);
 
-        if (!found) {
-            System.out.println("Bogie not found");
+        // ================= UC19 =================
+        String[] sortedIds = {"B1", "B2", "B3", "B7", "B9"};
+        String searchKey = "B7";
+
+        int low = 0;
+        int high = sortedIds.length - 1;
+        boolean isFound = false;
+
+        while (low <= high) {
+            int mid = (low + high) / 2;
+
+            int cmp = sortedIds[mid].compareTo(searchKey);
+
+            if (cmp == 0) {
+                isFound = true;
+                System.out.println("\nBinary Search: Found at index " + mid);
+                break;
+            } else if (cmp < 0) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+
+        if (!isFound) {
+            System.out.println("\nBinary Search: Not Found");
         }
     }
 }
