@@ -4,21 +4,21 @@ import java.util.regex.*;
 
 public class TrainConsistManagementApp {
 
-    // ================= UC14 =================
+    // UC14
     static class InvalidCapacityException extends Exception {
         InvalidCapacityException(String msg) {
             super(msg);
         }
     }
 
-    // ================= UC15 =================
+    // UC15
     static class CargoSafetyException extends RuntimeException {
         CargoSafetyException(String msg) {
             super(msg);
         }
     }
 
-    // ================= UC7 + UC14 =================
+    // UC7 + UC14
     static class Bogie {
         String name;
         int capacity;
@@ -36,7 +36,7 @@ public class TrainConsistManagementApp {
         }
     }
 
-    // ================= UC12 =================
+    // UC12
     static class GoodsBogie {
         String type;
         String cargo;
@@ -55,11 +55,11 @@ public class TrainConsistManagementApp {
 
         System.out.println("=== Train Consist Management App ===");
 
-        // ================= UC1 =================
+        // UC1
         List<String> trainConsist = new ArrayList<>();
         System.out.println("Initial bogie count: " + trainConsist.size());
 
-        // ================= UC2 =================
+        // UC2
         trainConsist.add("Sleeper");
         trainConsist.add("AC Chair");
         trainConsist.add("First Class");
@@ -69,14 +69,14 @@ public class TrainConsistManagementApp {
         System.out.println("After removal: " + trainConsist);
         System.out.println("Sleeper exists? " + trainConsist.contains("Sleeper"));
 
-        // ================= UC3 =================
+        // UC3
         Set<String> ids = new HashSet<>();
         ids.add("B1");
         ids.add("B2");
         ids.add("B2");
         System.out.println("\nUnique IDs: " + ids);
 
-        // ================= UC4 =================
+        // UC4
         LinkedList<String> linked = new LinkedList<>();
         linked.add("Engine");
         linked.add("Sleeper");
@@ -89,7 +89,7 @@ public class TrainConsistManagementApp {
         linked.removeLast();
         System.out.println("\nLinked Train: " + linked);
 
-        // ================= UC5 =================
+        // UC5
         LinkedHashSet<String> formation = new LinkedHashSet<>();
         formation.add("Engine");
         formation.add("Sleeper");
@@ -98,7 +98,7 @@ public class TrainConsistManagementApp {
         formation.add("Sleeper");
         System.out.println("\nOrdered Formation: " + formation);
 
-        // ================= UC6 =================
+        // UC6
         Map<String, Integer> capacityMap = new HashMap<>();
         capacityMap.put("Sleeper", 72);
         capacityMap.put("AC Chair", 60);
@@ -109,7 +109,7 @@ public class TrainConsistManagementApp {
             System.out.println(e.getKey() + " -> " + e.getValue());
         }
 
-        // ================= UC7 + UC14 =================
+        // UC7 + UC14
         List<Bogie> bogies = new ArrayList<>();
         try {
             bogies.add(new Bogie("Sleeper", 72));
@@ -125,13 +125,13 @@ public class TrainConsistManagementApp {
         bogies.sort(Comparator.comparingInt(b -> b.capacity));
         System.out.println("Sorted: " + bogies);
 
-        // ================= UC8 =================
+        // UC8
         List<Bogie> filtered = bogies.stream()
                 .filter(b -> b.capacity > 60)
                 .collect(Collectors.toList());
         System.out.println("\nFiltered (>60): " + filtered);
 
-        // ================= UC9 =================
+        // UC9
         Map<String, List<Bogie>> grouped = bogies.stream()
                 .collect(Collectors.groupingBy(b -> {
                     if (b.capacity > 60) return "High";
@@ -140,20 +140,20 @@ public class TrainConsistManagementApp {
                 }));
         System.out.println("\nGrouped: " + grouped);
 
-        // ================= UC10 =================
+        // UC10
         int total = bogies.stream()
                 .map(b -> b.capacity)
                 .reduce(0, Integer::sum);
         System.out.println("\nTotal Capacity: " + total);
 
-        // ================= UC11 =================
+        // UC11
         Pattern trainPattern = Pattern.compile("TRN-\\d{4}");
         Pattern cargoPattern = Pattern.compile("PET-[A-Z]{2}");
 
         System.out.println("\nTrain Valid: " + trainPattern.matcher("TRN-1234").matches());
         System.out.println("Cargo Valid: " + cargoPattern.matcher("PET-AB").matches());
 
-        // ================= UC12 =================
+        // UC12
         List<GoodsBogie> goods = new ArrayList<>();
         goods.add(new GoodsBogie("Cylindrical", "Petroleum"));
         goods.add(new GoodsBogie("Box", "Grains"));
@@ -164,7 +164,7 @@ public class TrainConsistManagementApp {
         System.out.println("\nGoods: " + goods);
         System.out.println("Safe? " + safe);
 
-        // ================= UC13 =================
+        // UC13
         List<Bogie> test = new ArrayList<>();
         try {
             for (int i = 0; i < 10000; i++) {
@@ -188,7 +188,7 @@ public class TrainConsistManagementApp {
         System.out.println("\nLoop Time: " + loopTime);
         System.out.println("Stream Time: " + streamTime);
 
-        // ================= UC15 =================
+        // UC15
         try {
             String shape = "Rectangular";
             String cargo = "Petroleum";
@@ -208,7 +208,7 @@ public class TrainConsistManagementApp {
             System.out.println("Cargo process completed.");
         }
 
-        // ================= UC16 =================
+        // UC16 (Bubble Sort)
         int[] capacities = {72, 60, 40, 90, 55};
 
         System.out.println("\nBefore Sorting (Bubble Sort):");
@@ -227,7 +227,7 @@ public class TrainConsistManagementApp {
         System.out.println("After Sorting (Bubble Sort):");
         System.out.println(Arrays.toString(capacities));
 
-        // ================= UC17 =================
+        // UC17 (Arrays.sort)
         String[] bogieTypes = {"Sleeper", "AC Chair", "First Class", "Cargo", "Engine"};
 
         System.out.println("\nBefore Sorting (Arrays.sort):");
@@ -237,5 +237,25 @@ public class TrainConsistManagementApp {
 
         System.out.println("After Sorting (Arrays.sort):");
         System.out.println(Arrays.toString(bogieTypes));
+
+        // UC18 (Linear Search)
+        String[] bogieIdsArr = {"B3", "B1", "B7", "B2", "B9"};
+        String searchKey = "B7";
+
+        System.out.println("\nSearching for Bogie ID: " + searchKey);
+
+        boolean found = false;
+
+        for (int i = 0; i < bogieIdsArr.length; i++) {
+            if (bogieIdsArr[i].equals(searchKey)) {
+                found = true;
+                System.out.println("Bogie found at position: " + i);
+                break;
+            }
+        }
+
+        if (!found) {
+            System.out.println("Bogie not found");
+        }
     }
 }
