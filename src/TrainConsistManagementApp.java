@@ -5,15 +5,20 @@ import java.util.regex.*;
 public class TrainConsistManagementApp {
 
     // ================= UC14 =================
-    // Custom Exception
     static class InvalidCapacityException extends Exception {
-        InvalidCapacityException(String message) {
-            super(message);
+        InvalidCapacityException(String msg) {
+            super(msg);
+        }
+    }
+
+    // ================= UC15 =================
+    static class CargoSafetyException extends RuntimeException {
+        CargoSafetyException(String msg) {
+            super(msg);
         }
     }
 
     // ================= UC7 + UC14 =================
-    // Updated Bogie Class with Validation
     static class Bogie {
         String name;
         int capacity;
@@ -62,28 +67,27 @@ public class TrainConsistManagementApp {
 
         trainConsist.remove("AC Chair");
         System.out.println("After removal: " + trainConsist);
-
         System.out.println("Sleeper exists? " + trainConsist.contains("Sleeper"));
 
         // ================= UC3 =================
-        Set<String> bogieIds = new HashSet<>();
-        bogieIds.add("B1");
-        bogieIds.add("B2");
-        bogieIds.add("B2");
-        System.out.println("\nUnique IDs: " + bogieIds);
+        Set<String> ids = new HashSet<>();
+        ids.add("B1");
+        ids.add("B2");
+        ids.add("B2");
+        System.out.println("\nUnique IDs: " + ids);
 
         // ================= UC4 =================
-        LinkedList<String> linkedTrain = new LinkedList<>();
-        linkedTrain.add("Engine");
-        linkedTrain.add("Sleeper");
-        linkedTrain.add("AC");
-        linkedTrain.add("Cargo");
-        linkedTrain.add("Guard");
+        LinkedList<String> linked = new LinkedList<>();
+        linked.add("Engine");
+        linked.add("Sleeper");
+        linked.add("AC");
+        linked.add("Cargo");
+        linked.add("Guard");
 
-        linkedTrain.add(2, "Pantry Car");
-        linkedTrain.removeFirst();
-        linkedTrain.removeLast();
-        System.out.println("\nLinked Train: " + linkedTrain);
+        linked.add(2, "Pantry Car");
+        linked.removeFirst();
+        linked.removeLast();
+        System.out.println("\nLinked Train: " + linked);
 
         // ================= UC5 =================
         LinkedHashSet<String> formation = new LinkedHashSet<>();
@@ -107,15 +111,11 @@ public class TrainConsistManagementApp {
 
         // ================= UC7 + UC14 =================
         List<Bogie> bogies = new ArrayList<>();
-
         try {
             bogies.add(new Bogie("Sleeper", 72));
             bogies.add(new Bogie("AC Chair", 60));
             bogies.add(new Bogie("First Class", 40));
-
-            // ❌ Invalid bogie (will throw exception)
-            bogies.add(new Bogie("Invalid", -10));
-
+            bogies.add(new Bogie("Invalid", -5)); // will fail
         } catch (InvalidCapacityException e) {
             System.out.println("\nException: " + e.getMessage());
         }
@@ -187,5 +187,25 @@ public class TrainConsistManagementApp {
 
         System.out.println("\nLoop Time: " + loopTime);
         System.out.println("Stream Time: " + streamTime);
+
+        // ================= UC15 =================
+        try {
+            String shape = "Rectangular";
+            String cargo = "Petroleum";
+
+            System.out.println("\nAssigning Cargo...");
+
+            if (shape.equals("Rectangular") && cargo.equals("Petroleum")) {
+                throw new CargoSafetyException("Unsafe cargo assignment!");
+            }
+
+            System.out.println("Cargo assigned successfully.");
+
+        } catch (CargoSafetyException e) {
+            System.out.println("ERROR: " + e.getMessage());
+
+        } finally {
+            System.out.println("Cargo process completed.");
+        }
     }
 }
