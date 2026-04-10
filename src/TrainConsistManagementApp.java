@@ -4,18 +4,21 @@ import java.util.regex.*;
 
 public class TrainConsistManagementApp {
 
+    // UC14
     static class InvalidCapacityException extends Exception {
         InvalidCapacityException(String msg) {
             super(msg);
         }
     }
 
+    // UC15
     static class CargoSafetyException extends RuntimeException {
         CargoSafetyException(String msg) {
             super(msg);
         }
     }
 
+    // UC7 + UC14
     static class Bogie {
         String name;
         int capacity;
@@ -33,6 +36,7 @@ public class TrainConsistManagementApp {
         }
     }
 
+    // UC12
     static class GoodsBogie {
         String type;
         String cargo;
@@ -198,7 +202,7 @@ public class TrainConsistManagementApp {
             System.out.println("Cargo process completed.");
         }
 
-        // UC16
+        // UC16 (Bubble Sort)
         int[] capacities = {72, 60, 40, 90, 55};
         for (int i = 0; i < capacities.length - 1; i++) {
             for (int j = 0; j < capacities.length - i - 1; j++) {
@@ -211,12 +215,12 @@ public class TrainConsistManagementApp {
         }
         System.out.println("\nBubble Sorted: " + Arrays.toString(capacities));
 
-        // UC17
+        // UC17 (Arrays.sort)
         String[] types = {"Sleeper", "AC Chair", "First Class", "Cargo", "Engine"};
         Arrays.sort(types);
         System.out.println("Arrays.sort: " + Arrays.toString(types));
 
-        // UC18
+        // UC18 (Linear Search)
         String[] bogieIdsArr = {"B3", "B1", "B7", "B2", "B9"};
         String key = "B7";
         boolean found = false;
@@ -229,22 +233,20 @@ public class TrainConsistManagementApp {
         }
         System.out.println("\nLinear Search Found: " + found);
 
-        // ================= UC19 =================
+        // UC19 (Binary Search)
         String[] sortedIds = {"B1", "B2", "B3", "B7", "B9"};
         String searchKey = "B7";
 
-        int low = 0;
-        int high = sortedIds.length - 1;
+        int low = 0, high = sortedIds.length - 1;
         boolean isFound = false;
 
         while (low <= high) {
             int mid = (low + high) / 2;
-
             int cmp = sortedIds[mid].compareTo(searchKey);
 
             if (cmp == 0) {
                 isFound = true;
-                System.out.println("\nBinary Search: Found at index " + mid);
+                System.out.println("Binary Search: Found at index " + mid);
                 break;
             } else if (cmp < 0) {
                 low = mid + 1;
@@ -254,7 +256,25 @@ public class TrainConsistManagementApp {
         }
 
         if (!isFound) {
-            System.out.println("\nBinary Search: Not Found");
+            System.out.println("Binary Search: Not Found");
+        }
+
+        // ================= UC20 =================
+        List<String> searchTrain = new ArrayList<>();
+
+        System.out.println("\nStarting search operation...");
+
+        try {
+            if (searchTrain.isEmpty()) {
+                throw new IllegalStateException("Cannot perform search: Train has no bogies.");
+            }
+
+            String keySearch = "Sleeper";
+            boolean exists = searchTrain.contains(keySearch);
+            System.out.println("Search result: " + exists);
+
+        } catch (IllegalStateException e) {
+            System.out.println("ERROR: " + e.getMessage());
         }
     }
 }
